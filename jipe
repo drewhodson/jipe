@@ -1,0 +1,26 @@
+#!/bin/bash
+TMPFILE=$(mktemp /tmp/pipe-js.js.XXXXXXXXX)
+trap "rm -f $TMPFILE" 0 2 3 15
+
+SCRIPT="$(echo "$1" | sed 's/_/__inputData/g')"
+
+cat > "$TMPFILE" << EOM
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+});
+
+let __inputData = '';
+rl.on('line', function (line) {
+  __inputData += line;
+}); 
+
+rl.on('close', function () {
+  $SCRIPT
+});
+EOM
+
+node "$TMPFILE"
