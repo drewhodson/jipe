@@ -10,7 +10,11 @@ A unix utility to add JS code to a pipe. Requires node.
 Every instance of _ in your snippet is replaced with a reference to a variable containing the full text content of STDIN.
 
 ```bash
-echo 'hello world!' | jipe 'console.log(_.length)' # returns 12
+echo 'hello world!' | jipe 'console.log(_.length)' # returns "12"
+```
+
+```bash
+echo '{ "json": { "data": "hello!" } }' | jipe 'console.log(JSON.parse(_).json.data)' # returns "hello!"
 ```
 
 ## TODO
