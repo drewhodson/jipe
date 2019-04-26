@@ -30,8 +30,8 @@ bats test.bats
 ```
 
 ## TODO
- * Add a linewise mode
- * Add an implicit output mode
+ * Document flags
+ * Add man page
 
 ## FAQ
  * What if I don't want colors in my output?

@@ -1,6 +1,36 @@
 #!/bin/bash
+PARAMS=""
+LINEWISE=""
+while (( "$#" )); do
+  case "$1" in
+    -l|--linewise)
+      LINEWISE="TRUE"
+      shift
+      ;;
+    --) # end argument parsing
+      shift
+      break
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS '$1'"
+      shift
+      ;;
+  esac
+done
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
 TMPFILE=$(mktemp /tmp/pipe-js.js.XXXXXXXXX)
 trap "rm -f $TMPFILE" 0 2 3 15
+
+SCRIPT=$1
+if [ $LINEWISE ] ; then
+	SCRIPT="_.split('\\n').forEach(_ => {$1})"
+fi
 
 cat > "$TMPFILE" << EOM
 process.stdin.setEncoding('utf8');
@@ -18,7 +48,7 @@ process.stdin.on('readable', () => {
 });
 
 process.stdin.on('end', function () {
-  $1
+  $SCRIPT
 });
 EOM
 

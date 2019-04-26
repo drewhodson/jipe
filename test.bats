@@ -3,6 +3,11 @@
 MULTILINE_INPUT="line one\nline two\nline three\n"
 
 @test "multiline input returns unchanged" {
-  result="$(echo "$MULTILINE_INPUT" | jipe 'w(_)')"
-  [ "$result" = "$MULTILINE_INPUT" ]
+  result="$(printf "$MULTILINE_INPUT" | ./jipe 'w(_)')"
+  [ "$result" = "$(printf "$MULTILINE_INPUT")" ]
+}
+
+@test "supports linewise mode" {
+  result="$(printf "$MULTILINE_INPUT" | ./jipe -l 'w(_.length+"\n")')"
+  [ "$result" = "$(printf "8\n8\n10\n0\n")" ]
 }
