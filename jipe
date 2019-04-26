@@ -11,7 +11,7 @@ while (( "$#" )); do
       shift
       break
       ;;
-    -*|--*=) # unsupported flags
+    -*) # unsupported flags
       echo "Error: Unsupported flag $1" >&2
       exit 1
       ;;
@@ -24,13 +24,13 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-if [ ! $1 ]; then
+if [ ! "$1" ]; then
   echo "Usage: jipe [-l] 'javascript code'"
   exit 1
 fi
 
 TMPFILE=$(mktemp /tmp/pipe-js.js.XXXXXXXXX)
-trap "rm -f $TMPFILE" 0 2 3 15
+trap 'rm -f $TMPFILE' 0 2 3 15
 
 SCRIPT=$1
 if [ $LINEWISE ] ; then
