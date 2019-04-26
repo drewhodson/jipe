@@ -17,12 +17,14 @@ echo 'hello world!' | jipe 'console.log(_.length)' # returns "13"
 echo '{ "json": { "data": "hello!" } }' | jipe 'console.log(JSON.parse(_).json.data)' # returns "hello!"
 ```
 
-## Helper Functions
+## Helper Functions and Scripts
 To increase the terseness of scripts, the following aliases exist:
  * `console.log` aliases: `log`, `l`
  * `process.stdout.write` aliases: `write`, `w`
  * Cast to string and print with newline: `print`, `p`
  * Cast to string and print without newline: `output`, `o`
+ * Full contents of stdin: `__`
+ * Full contents of stdin without trailing newline: `_n` 
 
 ## Linewise Mode
 For those of you familiar with AWK, or those who want a quick way to iterate over the lines of a file, use the flag `-l` or `--linewise` when invoking jipe to have the `_` variable instead refer to each line of the file.

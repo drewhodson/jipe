@@ -57,10 +57,11 @@ process.stdin.on('readable', () => {
 });
 
 process.stdin.on('end', function () {
+  let _n = _.substr(-1) === '\n' ? _.substr(0, _.length - 1) : _;
+  let __ = _;
+
   if ('$LINEWISE' === 'TRUE') {
-    if (_.substr(-1) === '\n') {
-      _ = _.substr(0, _.length - 1);
-    }
+    _ = _n;
   }
 
   $SCRIPT
