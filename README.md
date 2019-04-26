@@ -20,6 +20,8 @@ echo '{ "json": { "data": "hello!" } }' | jipe 'console.log(JSON.parse(_).json.d
 To increase the terseness of scripts, the following aliases exist:
  * `console.log` aliases: `log`, `l`
  * `process.stdout.write` aliases: `write`, `w`
+ * Cast to string and print with newline: `print`, `p`
+ * Cast to string and print without newline: `output`, `o`
 
 ## Testing
 Unit tests written with [bats](https://github.com/bats-core/bats-core).
