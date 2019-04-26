@@ -21,6 +21,14 @@ To increase the terseness of scripts, the following aliases exist:
  * `console.log` aliases: `log`, `l`
  * `process.stdout.write` aliases: `write`, `w`
 
+## Testing
+Unit tests written with [bats](https://github.com/bats-core/bats-core).
+
+Run tests with
+```bash
+bats test.bats
+```
+
 ## TODO
  * Add a linewise mode
  * Add an implicit output mode
