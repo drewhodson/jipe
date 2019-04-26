@@ -7,7 +7,7 @@ A unix utility to add JavaScript code to a pipe. Requires node.
 3. Copy jipe to your bin directory: `cp jipe ~/bin/`
 
 ## Usage
-The content of stdin is stored in a variable called `_`. Pass any JavaScript code as an argument to jipe.
+The stringified content of stdin is stored in a variable called `_`. Pass any JavaScript code as an argument to jipe.
 
 ```bash
 echo 'hello world!' | jipe 'console.log(_.length)' # returns "13"
@@ -17,11 +17,19 @@ echo 'hello world!' | jipe 'console.log(_.length)' # returns "13"
 echo '{ "json": { "data": "hello!" } }' | jipe 'console.log(JSON.parse(_).json.data)' # returns "hello!"
 ```
 
+## Helper Functions
 To increase the terseness of scripts, the following aliases exist:
  * `console.log` aliases: `log`, `l`
  * `process.stdout.write` aliases: `write`, `w`
  * Cast to string and print with newline: `print`, `p`
  * Cast to string and print without newline: `output`, `o`
+
+## Linewise Mode
+For those of you familiar with AWK, or those who want a quick way to iterate over the lines of a file, use the flag `-l` or `--linewise` when invoking jipe to have the `_` variable instead refer to each line of the file.
+
+```bash
+printf "hello\nworld\n.\n" | jipe -l 'p(_.length)' # returns 5\n5\n1\n
+```
 
 ## Testing
 Unit tests written with [bats](https://github.com/bats-core/bats-core).
@@ -32,9 +40,8 @@ bats test.bats
 ```
 
 ## TODO
- * Document flags
  * Add man page
 
 ## FAQ
  * What if I don't want colors in my output?
-   * Use `process.stdout.write` instead of `console.log`. Note that this also does not implicitly print a newline.
+   * Only `console.log` provides syntax highlighting, which is useful if you're printing JSON. However, use `print` or `output` to avoid color codes being printed.

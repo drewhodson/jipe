@@ -12,6 +12,11 @@ MULTILINE_INPUT="line one\nline two\nline three\n"
   [ "$result" = "$(printf "8\n8\n10\n")" ]
 }
 
+@test "long flag should also work" {
+  result="$(printf "$MULTILINE_INPUT" | ./jipe --linewise 'w(_.length+"\n")')"
+  [ "$result" = "$(printf "8\n8\n10\n")" ]
+}
+
 @test "line length should match awk" {
   result="$(printf "$MULTILINE_INPUT" | ./jipe -l 'w(_.length+"\n")')"
   result2="$(printf "$MULTILINE_INPUT" | awk '{ print length }')"
