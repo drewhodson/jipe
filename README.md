@@ -1,5 +1,5 @@
 # jipe
-A unix utility to add JavaScript code to a pipe. Requires node.
+A bash utility to add JavaScript code to a pipe. Requires node.
 
 ## Installation
 1. Clone the repo: `git clone https://github.com/drewhodson/jipe.git`
