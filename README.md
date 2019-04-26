@@ -1,5 +1,5 @@
 # jipe
-A unix utility to add JS code to a pipe. Requires node.
+A unix utility to add JavaScript code to a pipe. Requires node.
 
 ## Installation
 1. Clone the repo: `git clone https://github.com/drewhodson/jipe.git`
@@ -7,15 +7,19 @@ A unix utility to add JS code to a pipe. Requires node.
 3. Copy jipe to your bin directory: `cp jipe ~/bin/`
 
 ## Usage
-Every instance of _ in your snippet is replaced with a reference to a variable containing the full text content of STDIN.
+The content of stdin is stored in a variable called `_`. Pass any JavaScript code as an argument to jipe.
 
 ```bash
-echo 'hello world!' | jipe 'console.log(_.length)' # returns "12"
+echo 'hello world!' | jipe 'console.log(_.length)' # returns "13"
 ```
 
 ```bash
 echo '{ "json": { "data": "hello!" } }' | jipe 'console.log(JSON.parse(_).json.data)' # returns "hello!"
 ```
+
+To increase the terseness of scripts, the following aliases exist:
+ * `console.log` aliases: `log`, `l`
+ * `process.stdout.write` aliases: `write`, `w`
 
 ## TODO
  * Add a linewise mode

@@ -2,24 +2,23 @@
 TMPFILE=$(mktemp /tmp/pipe-js.js.XXXXXXXXX)
 trap "rm -f $TMPFILE" 0 2 3 15
 
-SCRIPT="$(echo "$1" | sed 's/_/__inputData/g')"
-
 cat > "$TMPFILE" << EOM
-const readline = require('readline');
+process.stdin.setEncoding('utf8');
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false
+let _ = '';
+let log = console.log.bind(console);
+let write = process.stdout.write.bind(process.stdout);
+let l = log;
+let w = write;
+process.stdin.on('readable', () => {
+  let chunk;
+  while ((chunk = process.stdin.read()) !== null) {
+    _ += chunk;
+  }
 });
 
-let __inputData = '';
-rl.on('line', function (line) {
-  __inputData += line;
-}); 
-
-rl.on('close', function () {
-  $SCRIPT
+process.stdin.on('end', function () {
+  $1
 });
 EOM
 
